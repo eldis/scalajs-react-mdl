@@ -18,6 +18,10 @@ object ScalaJSReactMdl {
     val cssLoader = "^0.25.0"
     val styleLoader = "^0.13.1"
     val reactMdlExtra = "^1.4.3"
+
+    val scalaJsRedux = "0.3.0-SNAPSHOT"
+    val scalaJsReactReduxForm = "0.1.0-SNAPSHOT"
+    val reduxLogger = "~2.7.4"
   }
 
   object Dependencies {
@@ -30,6 +34,13 @@ object ScalaJSReactMdl {
       "react-dom" -> Versions.react,
       "react-mdl" -> Versions.reactMdl
     )
+
+    lazy val scalaJsReactReduxForm = Seq(
+      "com.github.eldis" %%%! "scalajs-redux-react-eldis"% Versions.scalaJsRedux,
+      "com.github.eldis" %%%! "scalajs-react-redux-form" % Versions.scalaJsReactReduxForm
+    )
+
+    lazy val reduxLogger = Seq("redux-logger" -> Versions.reduxLogger)
   }
 
   object Settings {
@@ -61,6 +72,12 @@ object ScalaJSReactMdl {
         libraryDependencies ++= Seq(Dependencies.scalaJsReact),
         npmDevDependencies in Compile ++= Dependencies.jsReact,
         npmDependencies in Compile ++= Dependencies.jsReact
+      )
+
+    def scalaJsReactReduxForm: PC =
+      _.settings(
+        libraryDependencies ++= Dependencies.scalaJsReactReduxForm,
+        npmDependencies in Compile ++= Dependencies.reduxLogger
       )
 
 
@@ -107,8 +124,7 @@ object ScalaJSReactMdl {
       )
 
     lazy val ex1 = project.configure(
-        Settings.exampleProject("ex1")
-      )
-      .dependsOn(scalaJsReactMdl)
+      Settings.exampleProject("ex1"), Settings.scalaJsReactReduxForm
+    ).dependsOn(scalaJsReactMdl)
   }
 }

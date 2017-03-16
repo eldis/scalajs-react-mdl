@@ -1,42 +1,25 @@
-/**
- * Created by kirill on 14.02.2017.
- */
-
 package eldis.mdl.examples.ex1
 
-import eldis.react._
-import eldis.react.mdl.components._
+import eldis.react.mdl.components.{ FABButton, IconButton, _ }
 import eldis.react.vdom._
 import eldis.react.vdom.prefix_<^._
+import eldis.react._
+import eldis.redux.Dispatcher
+import eldis.redux.react.eldis.connect
+import eldis.redux.rrf._
 
-import scalajs.js
-import js.annotation.ScalaJSDefined
-
-@ScalaJSDefined
-class TestForm extends Component[Nothing]("TestForm") {
-
-  sealed trait DialogType
-  object DialogType {
-    case object SimpleDialog extends DialogType
-    case object SecondDialog extends DialogType
-    case object DialogWithCancel extends DialogType
-  }
-
-  def setIsDialogOpen(t: Option[DialogType]) = setState(state.copy(dlgType = t))
-  case class State(dlgType: Option[DialogType])
-  def initialState: State = State(None)
-
+object TestForm {
   case class RefRow(id: String, value: String)
   implicit val rg: RowGetters[RefRow, String] = new RowGetters[RefRow, String] {
     def getId(r: RefRow) = r.id
     def getDesc(r: RefRow) = r.value
   }
-
   val ref = List(
     RefRow("1", "Test 1"),
     RefRow("2", "Test 2"),
     RefRow("3", "Test 3")
   )
+
   case class RefRowInt(id: Int, value: String)
   implicit val rgInt: RowGetters[RefRowInt, Int] = new RowGetters[RefRowInt, Int] {
     def getId(r: RefRowInt) = r.id
@@ -48,7 +31,11 @@ class TestForm extends Component[Nothing]("TestForm") {
     RefRowInt(3, "Test 3")
   )
 
-  def render() =
+  case class Props(
+    onDlgTypeChange: (DialogType) => Unit
+  )
+
+  val component = FunctionalComponent[Props]("UserForm") { props =>
     <.div()(
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Checkbox:")),
@@ -92,13 +79,13 @@ class TestForm extends Component[Nothing]("TestForm") {
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Buttons:")),
-        <.div(^.className := "margin")(FlatButton("Flat", onClick = Some(() => setIsDialogOpen(Some(DialogType.SimpleDialog))))),
-        <.div(^.className := "margin")(RaisedButton("Raised", onClick = Some(() => setIsDialogOpen(Some(DialogType.SecondDialog))))),
-        <.div(^.className := "margin")(ColoredButton("Colored", onClick = Some(() => setIsDialogOpen(Some(DialogType.DialogWithCancel))))),
-        <.div(^.className := "margin")(AccentButton("Accent", onClick = Some(() => setIsDialogOpen(Some(DialogType.SimpleDialog))))),
-        <.div(^.className := "margin")(FABButton("warning", onClick = Some(() => setIsDialogOpen(Some(DialogType.SimpleDialog))))),
-        <.div(^.className := "margin")(FABButton("warning", onClick = Some(() => setIsDialogOpen(Some(DialogType.SimpleDialog))))),
-        <.div(^.className := "margin")(IconButton("warning", onClick = Some(() => setIsDialogOpen(Some(DialogType.SimpleDialog)))))
+        <.div(^.className := "margin")(FlatButton("Flat", onClick = Some(() => props.onDlgTypeChange(DialogType.SimpleDialog)))),
+        <.div(^.className := "margin")(RaisedButton("Raised", onClick = Some(() => props.onDlgTypeChange(DialogType.SecondDialog)))),
+        <.div(^.className := "margin")(ColoredButton("Colored", onClick = Some(() => props.onDlgTypeChange(DialogType.DialogWithCancel)))),
+        <.div(^.className := "margin")(AccentButton("Accent", onClick = Some(() => props.onDlgTypeChange(DialogType.SimpleDialog)))),
+        <.div(^.className := "margin")(FABButton("warning", onClick = Some(() => props.onDlgTypeChange(DialogType.SecondDialog)))),
+        <.div(^.className := "margin")(FABButton("warning", onClick = Some(() => props.onDlgTypeChange(DialogType.DialogWithCancel)))),
+        <.div(^.className := "margin")(IconButton("warning", onClick = Some(() => props.onDlgTypeChange(DialogType.SimpleDialog))))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Text control:")),
@@ -158,38 +145,28 @@ class TestForm extends Component[Nothing]("TestForm") {
           ))
         )
       ),
-      {
-        showDialog()
-      }
+      <.div(^.className := "form-row")(
+        <.div(^.className := "col-7-em")(Label("CustomMdlComponent")),
+        <.div(^.className := "colRight")(
+          Control(
+            Control.Props(
+              GenLens[Main.State](_.testForm.user),
+              component = Some(CustomMdlComponent.component)
+            )
+          )()
+        )
+      )
     )
+  }
 
-  def showDialog() =
-    state.dlgType match {
-      case Some(DialogType.SimpleDialog) =>
-        Dialog(Some("Simple"), true, className = "width-30-em" :: Nil,
-          Seq(
-            RaisedButton("Some Button"),
-            RaisedButton("CLOSE", onClick = Some(() => setState(state.copy(dlgType = None))))
-          ))(Label("Simple Dialog"))
+  val connectedComponent = connect(
+    (dispatch: Dispatcher[Action]) => {
+      val onDlgTypeChange = (t: DialogType) => dispatch(OpenDlg(t))
+      (s: Main.State) => Props(onDlgTypeChange)
+    },
+    component
+  )
 
-      case Some(DialogType.SecondDialog) =>
-        Dialog(Some("fullWidth Buttons"), true, "width-30-em" :: Nil,
-          Seq(
-            RaisedButton("Some Button"),
-            RaisedButton("CLOSE", onClick = Some(() => setState(state.copy(dlgType = None))))
-          ),
-          actionsProps = DialogActions.Props(fullWidth = Some(true)))(Label("Dialog with fullWidth Buttons"))
-
-      case Some(DialogType.DialogWithCancel) =>
-        Dialog(Some("With Cancel"), true, "width-30-em" :: Nil,
-          Seq(
-            RaisedButton("Some Button"),
-            RaisedButton("CLOSE", onClick = Some(() => setState(state.copy(dlgType = None))))
-          ),
-          Some(() => setState(state.copy(dlgType = None))))(Label("Dialog with cancel action"))
-      case _ => EmptyNode
-    }
-
+  def apply(): ReactDOMElement = React.createElement(connectedComponent, ())
 }
-@ScalaJSDefined
-object TestForm extends TestForm
+
