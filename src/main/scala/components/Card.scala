@@ -36,7 +36,7 @@ object Card {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
 }
 
 object CardTitle {
@@ -64,8 +64,8 @@ object CardTitle {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children: _*)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
 }
 object CardActions {
 
@@ -92,8 +92,8 @@ object CardActions {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children: _*)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
 }
 
 object CardText {
@@ -112,8 +112,8 @@ object CardText {
   @js.native
   object Component extends JSComponent[CommonProps]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children: _*)
-  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
+  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children)
 }
 
 object CardMenu {
@@ -132,6 +132,6 @@ object CardMenu {
   @js.native
   object Component extends JSComponent[CommonProps]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children: _*)
-  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
+  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children)
 }

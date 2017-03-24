@@ -49,7 +49,7 @@ object TestDialog {
     }
   }
 
-  private val connectedComponent = connect(
+  private val connectedComponent: FunctionalComponent[Unit] = connect(
     (dispatch: Dispatcher[Action]) => {
       val onDlgClose = () => dispatch(CloseDlg)
       (s: Main.State) => Props(s.testForm.dlgType, onDlgClose)

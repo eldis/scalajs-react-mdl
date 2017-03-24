@@ -53,7 +53,7 @@ object Reference {
     @JSImport("react-mdl-extra", "SelectField")
     @js.native
     object Component extends JSComponent[Props]
-    def apply(props: Props)(ch: ReactNode*) = React.createElement(Component, props, ch: _*)
+    def apply(props: Props)(ch: ReactNode*) = React.createElement(Component, props, ch)
   }
 
   @ScalaJSDefined
@@ -96,7 +96,7 @@ object Reference {
         val rg = getters
       }
 
-      val props = implicitly[WrapToNative[PropsImpl[R, ID]]].wrap(p)
+      val props = implicitly[Wrapper[Wrapped, PropsImpl[R, ID]]].wrap(p)
       JSReact.createElement(c, props, children: _*)
     }
   }

@@ -13,14 +13,14 @@ object ScalaJSReactMdl {
     val copyWebpackPlugin = "~4.0.1"
     val htmlLoader = "~0.4.3"
     val react = "~15.4.2"
-    val scalaJsReact = "0.1.0-SNAPSHOT"
+    val scalaJsReact = "0.2.0-SNAPSHOT"
     val reactMdl = "^1.7.2"
     val cssLoader = "^0.25.0"
     val styleLoader = "^0.13.1"
     val reactMdlExtra = "^1.4.3"
 
-    val scalaJsRedux = "0.3.0-SNAPSHOT"
-    val scalaJsReactReduxForm = "0.1.0-SNAPSHOT"
+    val scalaJsRedux = "0.4.0-SNAPSHOT"
+    val scalaJsReactReduxForm = "0.2.0-SNAPSHOT"
     val reduxLogger = "~2.7.4"
   }
 

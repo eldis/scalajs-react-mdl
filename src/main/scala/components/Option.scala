@@ -32,6 +32,6 @@ private object Option {
   @JSImport("react-mdl-extra", "Option")
   @js.native
   object Component extends JSComponent[Props]
-  def apply(props: Props)(ch: ReactNode) = React.createElement(Component, props, ch)
+  def apply(props: Props)(ch: ReactNode) = React.createElement(Component, props, Seq(ch))
 }
 

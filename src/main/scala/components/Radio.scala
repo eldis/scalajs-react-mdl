@@ -44,13 +44,13 @@ object Radio {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props, children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply(props: Props, children: ReactNode*) = React.createElement(Component, props, children)
 
   def apply(label: String, groupName: String, value: String, onChange: Option[ReactEventI => Unit] = None,
     defaultChecked: Option[Boolean] = None, disabled: Option[Boolean] = None) =
     React.createElement(
       Component,
       Props(disabled = disabled, groupName = groupName, value = value, onChange = onChange, ripple = Some(true), defaultChecked = defaultChecked),
-      label
+      Seq[ReactNode](label)
     )
 }

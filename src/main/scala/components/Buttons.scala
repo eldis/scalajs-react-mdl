@@ -55,7 +55,7 @@ object Button {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(label: String, p: Props = Props()) = React.createElement(Component, p, label)
+  def apply(label: String, p: Props = Props()) = React.createElement(Component, p, Seq[ReactNode](label))
 }
 
 object FlatButton {
@@ -119,9 +119,9 @@ object FABButton {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(icon: String, p: Props) = React.createElement(Component, p, Icon(Icon.Props(name = icon)))
+  def apply(icon: String, p: Props) = React.createElement(Component, p, Seq(Icon(Icon.Props(name = icon))))
   def apply(icon: String, onClick: Option[() => Unit] = None, disabled: Option[Boolean] = None, ripple: Option[Boolean] = Some(true), title: Option[String] = None) =
-    React.createElement(Component, Props(onClick = onClick, disabled = disabled, ripple = ripple, title = title), Icon(Icon.Props(name = icon)))
+    React.createElement(Component, Props(onClick = onClick, disabled = disabled, ripple = ripple, title = title), Seq(Icon(Icon.Props(name = icon))))
 }
 
 object IconButton {

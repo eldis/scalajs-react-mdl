@@ -39,7 +39,7 @@ object Dialog {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props)(children: ReactNode*) = React.createElement(Component, p, children: _*)
+  def apply(p: Props)(children: ReactNode*) = React.createElement(Component, p, children)
 
   def apply(
     title: Option[String],
@@ -58,7 +58,7 @@ object Dialog {
 
     val ch = dt :: dc :: da :: Nil
 
-    React.createElement(Component, Props(className = className, open = Some(open), onCancel = onCancel), ch: _*)
+    React.createElement(Component, Props(className = className, open = Some(open), onCancel = onCancel), ch)
   }
 }
 
@@ -87,7 +87,7 @@ object DialogTitle {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children: _*)
+  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children)
 }
 
 object DialogContent {
@@ -110,7 +110,7 @@ object DialogContent {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
 }
 
 object DialogActions {
@@ -138,6 +138,6 @@ object DialogActions {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children: _*)
+  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children)
 }
 

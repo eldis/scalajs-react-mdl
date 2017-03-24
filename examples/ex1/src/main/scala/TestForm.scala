@@ -159,7 +159,7 @@ object TestForm {
     )
   }
 
-  val connectedComponent = connect(
+  val connectedComponent: FunctionalComponent[Unit] = connect(
     (dispatch: Dispatcher[Action]) => {
       val onDlgTypeChange = (t: DialogType) => dispatch(OpenDlg(t))
       (s: Main.State) => Props(onDlgTypeChange)

@@ -47,8 +47,8 @@ object Menu {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(target: String)(children: ReactNode*) = React.createElement(Component, Props(target = target), children: _*)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply(target: String)(children: ReactNode*) = React.createElement(Component, Props(target = target), children)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
   def apply(
     id: String,
     iconName: String,
@@ -58,7 +58,7 @@ object Menu {
   )(children: ReactNode*) = {
     <.div()(
       IconButton(IconButton.Props(id = Some(id), icon = Some(iconName))),
-      React.createElement(Component, Props(target = id, align = align, ripple = ripple, valign = valign), children: _*)
+      React.createElement(Component, Props(target = id, align = align, ripple = ripple, valign = valign), children)
     )
   }
 }
@@ -91,13 +91,13 @@ object MenuItem {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children: _*)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
+  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
   def apply(
     label: String,
     onClick: Option[() => Unit] = None,
     disabled: Option[Boolean] = None,
     className: Seq[String] = Nil
   ) =
-    React.createElement(Component, Props(className = className, disabled = disabled, onClick = onClick), label)
+    React.createElement(Component, Props(className = className, disabled = disabled, onClick = onClick), Seq[ReactNode](label))
 }

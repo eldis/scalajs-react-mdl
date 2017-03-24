@@ -98,7 +98,7 @@ object MultiSelectField {
     @JSImport("react-mdl-extra", "MultiSelectField")
     @js.native
     object Component extends JSComponent[Props]
-    def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children: _*)
+    def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
   }
 
   @ScalaJSDefined
@@ -157,7 +157,7 @@ object MultiSelectField {
         val rg = getters
       }
 
-      val props = implicitly[WrapToNative[PropsImpl[R, ID]]].wrap(p)
+      val props = implicitly[Wrapper[Wrapped, PropsImpl[R, ID]]].wrap(p)
       JSReact.createElement(c, props, children: _*)
     }
   }
