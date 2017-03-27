@@ -126,5 +126,9 @@ object ScalaJSReactMdl {
     lazy val ex1 = project.configure(
       Settings.exampleProject("ex1"), Settings.scalaJsReactReduxForm
     ).dependsOn(scalaJsReactMdl)
+
+   lazy val ex2 = project.configure(
+      Settings.exampleProject("ex2"), Settings.scalaJsReactReduxForm
+    ).dependsOn(scalaJsReactMdl)
   }
 }

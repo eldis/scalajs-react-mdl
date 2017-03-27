@@ -6,6 +6,7 @@ import scalajs.js
 import js.JSConverters._
 import js.annotation.{ JSImport, ScalaJSDefined }
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 
 object Reference {
 
@@ -53,7 +54,7 @@ object Reference {
     @JSImport("react-mdl-extra", "SelectField")
     @js.native
     object Component extends JSComponent[Props]
-    def apply(props: Props)(ch: ReactNode*) = React.createElement(Component, props, ch)
+    def apply(props: Props)(ch: ReactNode*) = ElementBuilder(Component, props)(ch: _*)
   }
 
   @ScalaJSDefined
@@ -72,7 +73,7 @@ object Reference {
       val props = this.props.pr
       val getter = this.props.rg
       val s = this.state
-      val children = props.ref.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)))
+      val children = props.ref.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)): ReactNode)
       val value = s.value.getOrElse(props.value.getOrElse(None)).asInstanceOf[js.Any]
 
       NativeField(

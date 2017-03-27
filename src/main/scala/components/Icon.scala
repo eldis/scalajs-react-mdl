@@ -6,9 +6,9 @@ package eldis.react.mdl.components
 import scalajs.js
 import js.annotation.JSImport
 import js.JSConverters._
-
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 
 object Icon {
   @js.native
@@ -33,5 +33,5 @@ object Icon {
   @JSImport("react-mdl", "Icon")
   @js.native
   object Component extends JSComponent[Props]
-  def apply(p: Props) = React.createElement(Component, p)
+  def apply(p: Props) = ElementBuilder(Component, p)
 }

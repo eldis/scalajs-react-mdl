@@ -4,6 +4,7 @@ import scalajs.js
 import js.JSConverters._
 import js.annotation.JSImport
 import eldis.react._
+import eldis.react.util.ElementBuilder
 
 private object Option {
 
@@ -32,6 +33,6 @@ private object Option {
   @JSImport("react-mdl-extra", "Option")
   @js.native
   object Component extends JSComponent[Props]
-  def apply(props: Props)(ch: ReactNode) = React.createElement(Component, props, Seq(ch))
+  def apply(props: Props)(ch: ReactNode) = ElementBuilder(Component, props)(ch)
 }
 

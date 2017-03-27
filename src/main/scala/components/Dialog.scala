@@ -6,6 +6,7 @@ package eldis.react.mdl.components
 
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -39,7 +40,7 @@ object Dialog {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props)(children: ReactNode*) = React.createElement(Component, p, children)
+  def apply(p: Props)(children: ReactNode*) = ElementBuilder(Component, p)(children: _*)
 
   def apply(
     title: Option[String],
@@ -56,9 +57,9 @@ object Dialog {
     val dc = DialogContent(DialogContent.Props())(children: _*)
     val da = DialogActions(actionsProps)(actions: _*)
 
-    val ch = dt :: dc :: da :: Nil
+    val ch = List[ReactNode](dt, dc, da)
 
-    React.createElement(Component, Props(className = className, open = Some(open), onCancel = onCancel), ch)
+    ElementBuilder(Component, Props(className = className, open = Some(open), onCancel = onCancel))(ch: _*)
   }
 }
 
@@ -87,7 +88,7 @@ object DialogTitle {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children)
+  def apply(p: Props = Props())(children: ReactNode*) = ElementBuilder(Component, p)(children: _*)
 }
 
 object DialogContent {
@@ -110,7 +111,7 @@ object DialogContent {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply(props: Props)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 }
 
 object DialogActions {
@@ -138,6 +139,6 @@ object DialogActions {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props = Props())(children: ReactNode*) = React.createElement(Component, p, children)
+  def apply(p: Props = Props())(children: ReactNode*) = ElementBuilder(Component, p)(children: _*)
 }
 

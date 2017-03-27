@@ -6,6 +6,7 @@ package eldis.react.mdl.components
 
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -36,7 +37,7 @@ object Card {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply(props: Props) = ElementBuilder(Component, props)
 }
 
 object CardTitle {
@@ -64,8 +65,8 @@ object CardTitle {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply()(children: ReactNode*) = ElementBuilder(Component, Props())(children: _*)
+  def apply(props: Props)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 }
 object CardActions {
 
@@ -92,8 +93,8 @@ object CardActions {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
-  def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply()(children: ReactNode*) = ElementBuilder(Component, Props())(children: _*)
+  def apply(props: Props)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 }
 
 object CardText {
@@ -112,8 +113,8 @@ object CardText {
   @js.native
   object Component extends JSComponent[CommonProps]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
-  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply()(children: ReactNode*) = ElementBuilder(Component, Props())(children: _*)
+  def apply(props: CommonProps)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 }
 
 object CardMenu {
@@ -132,6 +133,6 @@ object CardMenu {
   @js.native
   object Component extends JSComponent[CommonProps]
 
-  def apply()(children: ReactNode*) = React.createElement(Component, Props(), children)
-  def apply(props: CommonProps)(children: ReactNode*) = React.createElement(Component, props, children)
+  def apply()(children: ReactNode*) = ElementBuilder(Component, Props())(children: _*)
+  def apply(props: CommonProps)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 }

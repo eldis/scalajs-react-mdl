@@ -6,6 +6,7 @@ package eldis.react.mdl.components
 
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 import eldis.react.vdom._
 
 import scalajs.js
@@ -44,13 +45,12 @@ object Radio {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(props: Props, children: ReactNode*) = React.createElement(Component, props, children)
+  def apply(props: Props, children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
 
   def apply(label: String, groupName: String, value: String, onChange: Option[ReactEventI => Unit] = None,
     defaultChecked: Option[Boolean] = None, disabled: Option[Boolean] = None) =
-    React.createElement(
+    ElementBuilder(
       Component,
-      Props(disabled = disabled, groupName = groupName, value = value, onChange = onChange, ripple = Some(true), defaultChecked = defaultChecked),
-      Seq[ReactNode](label)
-    )
+      Props(disabled = disabled, groupName = groupName, value = value, onChange = onChange, ripple = Some(true), defaultChecked = defaultChecked)
+    )(label)
 }

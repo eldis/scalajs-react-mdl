@@ -1,4 +1,4 @@
-package eldis.mdl.examples.ex1
+package eldis.mdl.examples.ex2
 
 import eldis.react.mdl.components.{ FABButton, IconButton, _ }
 import eldis.react.vdom._
@@ -7,6 +7,7 @@ import eldis.react._
 import eldis.redux.Dispatcher
 import eldis.redux.react.eldis.connect
 import eldis.redux.rrf._
+import eldis.redux.rrf.syntax._
 
 object TestForm {
   case class RefRow(id: String, value: String)
@@ -36,17 +37,14 @@ object TestForm {
   )
 
   val component = FunctionalComponent[Props]("UserForm") { props =>
-    <.div()(
+    Form(Form.Props(
+      GenLens[State](_.testForm)
+    ))(
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Checkbox:")),
         <.div(^.className := "margin")(
-          Checkbox(
-            Checkbox.Props(
-              label = Some("This is a checkbox"),
-              onChange = Some(e => println(e.target.value)),
-              defaultChecked = Some(true)
-            )
-          )
+          Checkbox(Checkbox.Props(label = Some("This is a checkbox"), onChange = Some(e => println(e.target.value))))
+            .control(GenLens[TestFormState](_.checkBoxFiled).partial)
         )
       ),
       <.div(^.className := "form-row")(
@@ -89,39 +87,47 @@ object TestForm {
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Text control:")),
-        <.div(^.className := "colRight")(Text(Text.Props(label = "Enter text", defaultValue = Some("123"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Text(Text.Props(label = "Enter text", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.textField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Password:")),
-        <.div(^.className := "colRight")(Password(Text.Props(label = "Enter password", defaultValue = Some("123"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Password(Text.Props(label = "Enter password", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.passwordField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Textarea:")),
-        <.div(^.className := "colRight")(TextArea(Text.Props(label = "", rows = Some(3), defaultValue = Some("123"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(TextArea(Text.Props(label = "", rows = Some(3), className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.textAreaField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Integer:")),
-        <.div(^.className := "colRight")(Integer(Text.Props(label = "", defaultValue = Some("12"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Integer(Text.Props(label = "", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.integerField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Float:")),
-        <.div(^.className := "colRight")(Float(Text.Props(label = "", defaultValue = Some("12.12"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Float(Text.Props(label = "", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.floatField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Fraction:")),
-        <.div(^.className := "colRight")(Fraction(Text.Props(label = "", defaultValue = Some("12/13"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Fraction(Text.Props(label = "", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.fractionField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Date:")),
-        <.div(^.className := "colRight")(Date(Text.Props(label = "", defaultValue = Some("12.12.2012"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Date(Text.Props(label = "", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.dateField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Time:")),
-        <.div(^.className := "colRight")(Time(Text.Props(label = "", defaultValue = Some("12:12"), className = Seq("controlWidth"))))
+        <.div(^.className := "colRight")(Time(Text.Props(label = "", className = Seq("controlWidth")))
+          .control(GenLens[TestFormState](_.timeField).partial))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Reference")),
-        <.div(^.className := "colRight")(Reference(Reference.Props[RefRow, String](label = "Select value...", ref = ref, value = Some("3"))))
+        <.div(^.className := "colRight")(Reference(Reference.Props[RefRow, String](label = "Select value...", ref = ref)))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Menu:")),
@@ -144,18 +150,6 @@ object TestForm {
             value = Some(Seq(1, 3))
           ))
         )
-      ),
-      <.div(^.className := "form-row")(
-        <.div(^.className := "col-7-em")(Label("CustomMdlComponent")),
-        <.div(^.className := "colRight")(
-          Text("test").control(GenLens[Main.State](_.testForm.user))/*
-          Control(
-            Control.Props(
-              GenLens[Main.State](_.testForm.user),
-              component = Text("test")//Some(CustomMdlComponent.component)
-            )
-          )()*/
-        )
       )
     )
   }
@@ -163,7 +157,7 @@ object TestForm {
   val connectedComponent: FunctionalComponent[Unit] = connect(
     (dispatch: Dispatcher[Action]) => {
       val onDlgTypeChange = (t: DialogType) => dispatch(OpenDlg(t))
-      (s: Main.State) => Props(onDlgTypeChange)
+      (s: State) => Props(onDlgTypeChange)
     },
     component
   )

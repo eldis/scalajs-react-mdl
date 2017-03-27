@@ -1,0 +1,88 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: Helvetica, Arial, sans-serif;
+	line-height: 1.4em;
+	background: #f5f5f5;
+	color: #4d4d4d;
+	min-width: 230px;
+	max-width: 700px;
+	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 300;
+}
+
+:focus {
+	outline: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.main {
+	position: relative;
+	z-index: 2;
+	border-top: 1px solid #e6e6e6;
+}
+
+.testApp {
+	background: #fff;
+	margin: 130px 0 40px 0;
+	position: relative;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+    box-sizing: border-box;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    flex-direction: horizontal;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.col-7-em {
+    text-align: end;
+    flex-basis: 7em;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.margin {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.colRight {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    flex-grow: 1;
+}
+
+.controlWidth {
+    width: 100% !important;
+}
+
+.width-30-em {
+	width: 35em;
+}
+
+.mdl-dialog {
+    border-radius: 7px;
+}
+
+.mdl-dialog_content {
+	padding: 0
+}
+
+
+

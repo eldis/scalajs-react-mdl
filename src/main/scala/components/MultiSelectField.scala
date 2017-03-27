@@ -7,6 +7,7 @@ import js.JSConverters._
 import js.annotation.{ JSImport, ScalaJSDefined }
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 import eldis.react.vdom._
 
 import scala.scalajs.js.|
@@ -98,7 +99,7 @@ object MultiSelectField {
     @JSImport("react-mdl-extra", "MultiSelectField")
     @js.native
     object Component extends JSComponent[Props]
-    def apply(props: Props)(children: ReactNode*) = React.createElement(Component, props, children)
+    def apply(props: Props)(children: ReactNode*) = ElementBuilder(Component, props)(children: _*)
   }
 
   @ScalaJSDefined
@@ -117,7 +118,7 @@ object MultiSelectField {
       val props = this.props.pr
       val getter = this.props.rg
       val s = this.state
-      val children = props.ref.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)))
+      val children = props.ref.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)): ReactNode)
       val value = s.value.getOrElse(props.value.getOrElse(Seq()))
       val err: String | Boolean =
         if (props.required.getOrElse(false) && value.isEmpty) {

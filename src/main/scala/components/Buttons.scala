@@ -5,6 +5,7 @@ package eldis.react.mdl.components
 
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 
 import scalajs.js
 import js.annotation.JSImport
@@ -55,7 +56,7 @@ object Button {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(label: String, p: Props = Props()) = React.createElement(Component, p, Seq[ReactNode](label))
+  def apply(label: String, p: Props = Props()) = ElementBuilder(Component, p)(label)
 }
 
 object FlatButton {
@@ -119,9 +120,9 @@ object FABButton {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(icon: String, p: Props) = React.createElement(Component, p, Seq(Icon(Icon.Props(name = icon))))
+  def apply(icon: String, p: Props) = ElementBuilder(Component, p)(Icon(Icon.Props(name = icon)))
   def apply(icon: String, onClick: Option[() => Unit] = None, disabled: Option[Boolean] = None, ripple: Option[Boolean] = Some(true), title: Option[String] = None) =
-    React.createElement(Component, Props(onClick = onClick, disabled = disabled, ripple = ripple, title = title), Seq(Icon(Icon.Props(name = icon))))
+    ElementBuilder(Component, Props(onClick = onClick, disabled = disabled, ripple = ripple, title = title))(Icon(Icon.Props(name = icon)))
 }
 
 object IconButton {
@@ -174,7 +175,7 @@ object IconButton {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props) = React.createElement(Component, p)
-  def apply(icon: String, onClick: Option[() => Unit] = None, disabled: Option[Boolean] = None, title: Option[String] = None) = React.createElement(Component, Props(icon = Some(icon), disabled = disabled, onClick = onClick, title = title))
+  def apply(p: Props) = ElementBuilder(Component, p)
+  def apply(icon: String, onClick: Option[() => Unit] = None, disabled: Option[Boolean] = None, title: Option[String] = None) = ElementBuilder(Component, Props(icon = Some(icon), disabled = disabled, onClick = onClick, title = title))
 }
 

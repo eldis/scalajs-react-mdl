@@ -6,10 +6,10 @@ package eldis.react.mdl.components
 import scalajs.js
 import js.annotation.JSImport
 import js.JSConverters._
-import js.{ Dynamic }
-
+import js.Dynamic
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 import eldis.react.vdom._
 
 object Text {
@@ -78,39 +78,39 @@ object Text {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(label: String) = React.createElement(Component, Props(label = label))
-  def apply(label: String, floatingLabel: Boolean) = React.createElement(Component, Props(label = label, floatingLabel = Some(floatingLabel)))
-  def apply(p: Props) = React.createElement(Component, p)
+  def apply(label: String) = ElementBuilder(Component, Props(label = label))
+  def apply(label: String, floatingLabel: Boolean) = ElementBuilder(Component, Props(label = label, floatingLabel = Some(floatingLabel)))
+  def apply(p: Props) = ElementBuilder(Component, p)
 
   def password(p: Props) =
-    React.createElement(Component, copy(p, Dynamic.literal(`type` = "password")).asInstanceOf[Props])
+    ElementBuilder(Component, copy(p, Dynamic.literal(`type` = "password")).asInstanceOf[Props])
   def textArea(p: Props) =
-    React.createElement(Component, copy(p, Dynamic.literal(rows = (p.rows.getOrElse(1)).toInt)).asInstanceOf[Props])
+    ElementBuilder(Component, copy(p, Dynamic.literal(rows = (p.rows.getOrElse(1)).toInt)).asInstanceOf[Props])
   def date(p: Props) = {
     val dateError = "Введите значение в формате ДД.ММ.ГГГГ"
     val datePattern = """^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"""
-    React.createElement(Component, copy(p, Dynamic.literal(
+    ElementBuilder(Component, copy(p, Dynamic.literal(
       error = dateError, pattern = datePattern
     )).asInstanceOf[Props])
   }
   def time(p: Props) = {
     val timeError = "Введите значение в формате ЧЧ:ММ"
     val timePattern = """^([0-1][0-9]|2[0-3]):([0-5][0-9])$"""
-    React.createElement(Component, copy(p, Dynamic.literal(
+    ElementBuilder(Component, copy(p, Dynamic.literal(
       error = timeError, pattern = timePattern
     )).asInstanceOf[Props])
   }
-  def integer(p: Props) = React.createElement(Component, copy(p, Dynamic.literal(
+  def integer(p: Props) = ElementBuilder(Component, copy(p, Dynamic.literal(
     pattern = """^-?\d+$""",
     error = "Введите целое число"
   )).asInstanceOf[Props])
 
-  def float(p: Props) = React.createElement(Component, copy(p, Dynamic.literal(
+  def float(p: Props) = ElementBuilder(Component, copy(p, Dynamic.literal(
     pattern = """^-?\d*(\.\d+)?$""",
     error = "Введите число"
   )).asInstanceOf[Props])
 
-  def fraction(p: Props) = React.createElement(Component, copy(p, Dynamic.literal(
+  def fraction(p: Props) = ElementBuilder(Component, copy(p, Dynamic.literal(
     pattern = """^-?(\d+\/\d+|\d+(\s\d+\/\d+)?|\d*\.\d+)$""",
     error = "Введите дробное значение"
   )).asInstanceOf[Props])

@@ -5,6 +5,7 @@ package eldis.react.mdl.components
 
 import eldis.react._
 import eldis.react.mdl._
+import eldis.react.util.ElementBuilder
 import eldis.react.vdom._
 
 import scalajs.js
@@ -50,6 +51,6 @@ object Checkbox {
   @js.native
   object Component extends JSComponent[Props]
 
-  def apply(p: Props) = React.createElement(Component, p)
-  def apply(label: String) = React.createElement(Component, Props(label = Some(label)))
+  def apply(p: Props) = ElementBuilder(Component, p)
+  def apply(label: String) = ElementBuilder(Component, Props(label = Some(label)))
 }
