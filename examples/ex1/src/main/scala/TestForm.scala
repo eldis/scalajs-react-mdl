@@ -148,13 +148,12 @@ object TestForm {
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("CustomMdlComponent")),
         <.div(^.className := "colRight")(
-          Text("test").control(GenLens[Main.State](_.testForm.user))/*
           Control(
             Control.Props(
               GenLens[Main.State](_.testForm.user),
-              component = Text("test")//Some(CustomMdlComponent.component)
+              component = Some(CustomMdlComponent.component)
             )
-          )()*/
+          )()
         )
       )
     )

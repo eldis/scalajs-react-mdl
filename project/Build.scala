@@ -41,6 +41,8 @@ object ScalaJSReactMdl {
     )
 
     lazy val reduxLogger = Seq("redux-logger" -> Versions.reduxLogger)
+
+    lazy val reactMdlExtra = Seq("react-mdl-extra" -> Versions.reactMdlExtra)
   }
 
   object Settings {
@@ -80,6 +82,11 @@ object ScalaJSReactMdl {
         npmDependencies in Compile ++= Dependencies.reduxLogger
       )
 
+   def reactMdlExtra: PC = 
+     _.settings(
+	npmDependencies in Compile ++= Dependencies.reactMdlExtra
+     )	
+
 
     def exampleProject(prjName: String): PC = { p: Project =>
       p.in(file("examples") / prjName)
@@ -91,7 +98,6 @@ object ScalaJSReactMdl {
             "html-webpack-plugin" -> Versions.htmlWebpackPlugin,
             "copy-webpack-plugin" -> Versions.copyWebpackPlugin,
             "html-loader" -> Versions.htmlLoader,
-            "react-mdl-extra" -> Versions.reactMdlExtra,
             "style-loader" -> Versions.styleLoader,
             "css-loader" -> Versions.cssLoader
           ),
@@ -117,7 +123,7 @@ object ScalaJSReactMdl {
   object Projects {
     lazy val scalaJsReactMdl = project.in(file("."))
       .configure(
-        Settings.scalajsProject, Settings.jsBundler, Settings.publish, Settings.react
+        Settings.scalajsProject, Settings.jsBundler, Settings.publish, Settings.react, Settings.reactMdlExtra
       )
       .settings(
         name := "scalajs-react-mdl"
