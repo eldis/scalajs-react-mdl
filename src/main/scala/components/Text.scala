@@ -53,7 +53,7 @@ object Text {
       defaultValue: Option[String] = None
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-text" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         disabled = disabled.orUndefined,

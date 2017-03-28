@@ -26,7 +26,7 @@ object Card {
       className: Seq[String] = Nil,
       key: Option[String] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-card" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       shadow = shadow.getOrElse(0).toInt
@@ -55,7 +55,7 @@ object CardTitle {
       style: Option[js.Object] = None
     ) = js.Dynamic.literal(
       expand = expand.orUndefined,
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-card--title" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined
     ).asInstanceOf[Props]
@@ -83,7 +83,7 @@ object CardActions {
       style: Option[js.Object] = None
     ) = js.Dynamic.literal(
       border = border.orUndefined,
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-card--action" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined
     ).asInstanceOf[Props]
@@ -104,7 +104,7 @@ object CardText {
       key: Option[String] = None,
       style: Option[js.Object] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-card--text" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined
     ).asInstanceOf[CommonProps]
@@ -124,7 +124,7 @@ object CardMenu {
       key: Option[String] = None,
       style: Option[js.Object] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-card--menu" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined
     ).asInstanceOf[CommonProps]

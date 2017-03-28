@@ -31,7 +31,7 @@ object Radio {
       onChange: Option[ReactEventI => Unit] = None, defaultChecked: Option[Boolean] = None) = js.Dynamic.literal(
       name = groupName,
       value = value,
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-radio" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       disabled = disabled.orUndefined,

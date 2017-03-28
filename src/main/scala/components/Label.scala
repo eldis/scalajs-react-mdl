@@ -24,7 +24,7 @@ object Label {
 
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr(Seq("mdl-label", "es-label") ++ className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         label = label
@@ -34,7 +34,7 @@ object Label {
   def createLabel(p: Props) =
     <.label(
       attr("key") := AttrValue(p.key),
-      ^.className := AttrValue(fillClassAttr(Seq[String]("mdl-label", p.className.getOrElse(""))).orUndefined),
+      ^.className := AttrValue(p.className),
       ^.style := AttrValue(p.style)
     )(p.label)
 

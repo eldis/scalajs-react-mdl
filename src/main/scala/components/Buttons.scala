@@ -38,7 +38,7 @@ object Button {
       ripple: Option[Boolean] = None,
       title: Option[String] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-button" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       raised = raised.orUndefined,
@@ -104,7 +104,7 @@ object FABButton {
       title: Option[String] = None
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-button--fab" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         colored = colored.orUndefined,
@@ -156,7 +156,7 @@ object IconButton {
       id: Option[String] = None
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-button--icon" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         name = icon.orUndefined,

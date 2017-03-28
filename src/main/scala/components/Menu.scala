@@ -34,7 +34,7 @@ object Menu {
       target: String = "",
       valign: Option[String] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-menu" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       align = align.orUndefined,
@@ -80,7 +80,7 @@ object MenuItem {
       disabled: Option[Boolean] = None,
       onClick: Option[() => Unit] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-menu--item" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       disabled = disabled.orUndefined,

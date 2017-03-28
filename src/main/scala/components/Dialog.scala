@@ -28,7 +28,7 @@ object Dialog {
       open: Option[Boolean] = None,
       onCancel: Option[() => Unit] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-dialog" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       open = open.orUndefined,
@@ -77,7 +77,7 @@ object DialogTitle {
       style: Option[js.Object] = None,
       component: Option[String] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-dialog--title" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       component = component.orUndefined
@@ -101,7 +101,7 @@ object DialogContent {
       key: Option[String] = None,
       style: Option[js.Object] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-dialog--content" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined
     ).asInstanceOf[Props]
@@ -128,7 +128,7 @@ object DialogActions {
       style: Option[js.Object] = None,
       fullWidth: Option[Boolean] = None
     ) = js.Dynamic.literal(
-      className = fillClassAttr(className).orUndefined,
+      className = fillClassAttr("es-dialog--action" +: className).orUndefined,
       key = key.orUndefined,
       style = style.orUndefined,
       fullWidth = fullWidth.orUndefined

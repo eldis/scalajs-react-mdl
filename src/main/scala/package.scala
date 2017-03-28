@@ -7,7 +7,9 @@ import scala.scalajs.js
 import scala.scalajs.js.Dynamic
 
 package object mdl {
-  private[mdl] def fillClassAttr(s: Seq[String]): Option[String] = Option(s).filterNot(_.isEmpty).map(_.mkString(" "))
+  private[mdl] def fillClassAttr(s: Seq[String]): Option[String] = {
+    Option(("es-control" +: s).mkString((" ")))
+  }
 
   // The method is used to copy the values of all properties from propsObject to targetObject. It returns new object
   private[mdl] def copy(targetObject: js.Any, propsObject: js.Any): js.Any =

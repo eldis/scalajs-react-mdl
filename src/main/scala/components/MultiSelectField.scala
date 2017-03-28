@@ -40,7 +40,7 @@ object MultiSelectField {
     val rg: RowGetters[R, ID]
   }
 
-  object NativeField {
+  private object NativeField {
     @js.native
     trait Props extends CommonProps {
       val label: String = js.native
@@ -81,7 +81,7 @@ object MultiSelectField {
         children = children.toJSArray,
         value = value.toJSArray,
         onChange = onChange.orUndefined,
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-multi--select" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         align = align.orUndefined,
@@ -103,7 +103,7 @@ object MultiSelectField {
   }
 
   @ScalaJSDefined
-  class NativeFieldWrapper[R, ID] extends Component[PropsImpl[R, ID]]("MultiSelectField.stateful") {
+  private class NativeFieldWrapper[R, ID] extends Component[PropsImpl[R, ID]]("MultiSelectField.stateful") {
 
     case class State(value: Option[Seq[ID]])
 
@@ -150,20 +150,20 @@ object MultiSelectField {
     }
   }
 
-  object NativeFieldWrapper {
-    def apply[R, ID](prop: MultiSelectField.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]): ReactDOMElement = {
-      val c = js.constructorOf[NativeFieldWrapper[R, ID]]
+  private object NativeFieldWrapper {
+    def apply[R, ID](prop: MultiSelectField.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]) = {
+      val c = js.constructorOf[NativeFieldWrapper[R, ID]].asInstanceOf[NativeComponentType.WithChildren[Wrapped[PropsImpl[R, ID]]]]
       val p = new PropsImpl[R, ID] {
         val pr = prop
         val rg = getters
       }
 
       val props = implicitly[Wrapper[Wrapped, PropsImpl[R, ID]]].wrap(p)
-      JSReact.createElement(c, props, children: _*)
+      ElementBuilder(c, props, children)
     }
   }
 
-  def apply[R, ID](prop: MultiSelectField.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]): ReactDOMElement = {
+  def apply[R, ID](prop: MultiSelectField.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]) = {
     NativeFieldWrapper(prop, children: _*)(getters)
   }
 }

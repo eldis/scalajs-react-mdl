@@ -36,7 +36,7 @@ object Checkbox {
       defaultChecked: Option[Boolean] = None
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-checkbox" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         label = label.orUndefined,

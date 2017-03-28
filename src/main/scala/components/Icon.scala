@@ -23,7 +23,7 @@ object Icon {
       style: Option[js.Object] = None
     ) =
       js.Dynamic.literal(
-        className = fillClassAttr(className).orUndefined,
+        className = fillClassAttr("es-icon" +: className).orUndefined,
         key = key.orUndefined,
         style = style.orUndefined,
         name = name
