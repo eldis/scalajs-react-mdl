@@ -18,6 +18,7 @@ object ScalaJSReactMdl {
     val cssLoader = "^0.25.0"
     val styleLoader = "^0.13.1"
     val reactMdlExtra = "^1.4.3"
+    val materialDesignLite = "^1.3.0"
 
     val scalaJsRedux = "0.4.0-SNAPSHOT"
     val scalaJsReactReduxForm = "0.2.0-SNAPSHOT"
@@ -32,6 +33,7 @@ object ScalaJSReactMdl {
     lazy val jsReact = Seq(
       "react" -> Versions.react,
       "react-dom" -> Versions.react,
+      "material-design-lite" -> Versions.materialDesignLite,
       "react-mdl" -> Versions.reactMdl
     )
 
