@@ -23,8 +23,8 @@ cfg.module.loaders.push(
 cfg.plugins = cfg.plugins || [];
 
 cfg.plugins.push(new CopyWebpackPlugin([
-  { from: path.join(nodeModulesDir, 'material-design-lite/dist/material.css'), to: 'mdl/material.css' },
-  { from: path.join(nodeModulesDir, 'material-design-lite/dist/material.js'), to: 'mdl/material.js' },
+  { from: path.join(nodeModulesDir, 'react-mdl/extra/material.css'), to: 'mdl/material.css' },
+  { from: path.join(nodeModulesDir, 'react-mdl/extra/material.js'), to: 'mdl/material.js' },
   { from: path.join(rootDir, 	    'src/main/assets/index.css'), to: 'css/index.css' }
 ]));
 
