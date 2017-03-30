@@ -1,6 +1,5 @@
 package eldis.react.mdl.components
 
-import eldis.react.NativeComponentType.WithChildren
 import eldis.react._
 
 import scalajs.js
@@ -10,20 +9,6 @@ import eldis.react.mdl._
 import eldis.react.util.ElementBuilder
 
 object Reference {
-
-  case class Props[R, ID](
-    label: String,
-    value: Option[ID] = None,
-    ref: Seq[R] = Nil,
-    onChange: Option[ID => Unit] = None,
-    className: Seq[String] = Nil,
-    key: Option[String] = None,
-    style: Option[js.Object] = None
-  )
-  trait PropsImpl[R, ID] {
-    val pr: Props[R, ID]
-    val rg: RowGetters[R, ID]
-  }
 
   private object NativeField {
     @js.native
@@ -59,7 +44,40 @@ object Reference {
   }
 
   @ScalaJSDefined
-  private class NativeFieldWrapper[R, ID] extends Component[PropsImpl[R, ID]]("MultiSelectField.stateful") {
+  trait Props[R, ID] extends js.Object {
+    val className: Seq[String]
+    val key: js.UndefOr[String]
+    val style: js.UndefOr[js.Object]
+    val label: String
+    val value: js.UndefOr[ID]
+    val onChange: js.UndefOr[js.Function1[ID, Unit]]
+    val refItems: Seq[R]
+    val rg: RowGetters[R, ID]
+  }
+
+  object Props {
+    def apply[R, ID](
+      initLabel: String = "",
+      initRefItems: Seq[R] = Nil,
+      initClassName: Seq[String] = Nil,
+      initKey: Option[String] = None,
+      initStyle: Option[js.Object] = None,
+      initValue: Option[ID] = None,
+      initOnChange: Option[js.Function1[ID, Unit]] = None
+    )(implicit initRowGetter: RowGetters[R, ID]) = new Props[R, ID] {
+      val label: String = initLabel
+      val className: Seq[String] = initClassName
+      val key: js.UndefOr[String] = initKey.orUndefined
+      val style: js.UndefOr[js.Object] = initStyle.orUndefined
+      val value: js.UndefOr[ID] = initValue.orUndefined
+      val onChange: js.UndefOr[js.Function1[ID, Unit]] = initOnChange.orUndefined
+      val refItems: Seq[R] = initRefItems
+      val rg: RowGetters[R, ID] = initRowGetter
+    }
+  }
+
+  @ScalaJSDefined
+  private class NativeFieldWrapper[R, ID] extends ComponentBase[Identity, Props[R, ID]]("MultiSelectField.stateful") {
 
     case class State(value: Option[ID])
 
@@ -67,14 +85,14 @@ object Reference {
 
     def onChange(v: ID): Unit = {
       setState(State(Some(v)))
-      this.props.pr.onChange.map(h => h(v)).getOrElse(Unit)
+      this.props.onChange.foreach(h => h(v))
     }
 
     def render = {
-      val props = this.props.pr
+      val props = this.props
       val getter = this.props.rg
       val s = this.state
-      val children = props.ref.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)): ReactNode)
+      val children = props.refItems.map(row => Option(Option.Props(value = getter.toJsAny(getter.getId(row))))(getter.getDesc(row)): ReactNode)
       val value = s.value.getOrElse(props.value.getOrElse(None)).asInstanceOf[js.Any]
 
       NativeField(
@@ -82,8 +100,8 @@ object Reference {
           label = props.label,
           value = Some(value),
           className = props.className,
-          key = props.key,
-          style = props.style,
+          key = props.key.toOption,
+          style = props.style.toOption,
           onChange = Some(v => onChange(getter.fromJsAny(v)))
         )
       )(children: _*)
@@ -91,19 +109,14 @@ object Reference {
   }
 
   private object NativeFieldWrapper {
-    def apply[R, ID](prop: Reference.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]) = {
-      val c = js.constructorOf[NativeFieldWrapper[R, ID]].asInstanceOf[NativeComponentType.WithChildren[Wrapped[PropsImpl[R, ID]]]]
-      val p = new PropsImpl[R, ID] {
-        val pr = prop
-        val rg = getters
-      }
+    val component = js.constructorTag[NativeFieldWrapper[String, Int]].constructor.asInstanceOf[NativeComponentType.WithChildren[Props[_, _]]]
 
-      val props = implicitly[Wrapper[Wrapped, PropsImpl[R, ID]]].wrap(p)
-      ElementBuilder(c, props, children)
+    def apply[R, ID](prop: Reference.Props[R, ID], children: ReactNode*): ElementBuilder[NativeComponentType.WithChildren[Props[_, _]], Props[_, _], Seq[ReactNode]] = {
+      ElementBuilder(component, prop: Props[_, _], children)
     }
   }
 
-  def apply[R, ID](prop: Reference.Props[R, ID], children: ReactNode*)(implicit getters: RowGetters[R, ID]) = {
-    NativeFieldWrapper(prop, children: _*)(getters)
+  def apply[R, ID](prop: Reference.Props[R, ID], children: ReactNode*) = {
+    NativeFieldWrapper(prop, children: _*)
   }
 }

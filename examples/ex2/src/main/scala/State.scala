@@ -123,7 +123,7 @@ object TestFormState {
     override val fractionField: String = "123"
     override val dateField: String = "123"
     override val timeField: String = "123"
-    override val referenceField: String = "123"
+    override val referenceField: String = "2"
     override val multiSelectField: String = "123"
   }
 

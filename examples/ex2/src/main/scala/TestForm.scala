@@ -127,7 +127,10 @@ object TestForm {
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Reference")),
-        <.div(^.className := "colRight")(Reference(Reference.Props[RefRow, String](label = "Select value...", ref = ref)))
+        <.div(^.className := "colRight")(
+          Reference(Reference.Props[RefRow, String]("Select value...", ref))
+            .control(GenLens[TestFormState](_.referenceField).partial)
+        )
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Menu:")),
