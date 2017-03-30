@@ -46,7 +46,7 @@ trait TestFormState extends js.Object {
   val dateField: String
   val timeField: String
   val referenceField: String
-  val multiSelectField: String
+  val multiSelectField: Seq[Int]
 }
 object TestFormState {
   def apply(
@@ -62,7 +62,7 @@ object TestFormState {
     initDateField: String,
     initTimeField: String,
     initReferenceField: String,
-    initMultiSelectField: String
+    initMultiSelectField: Seq[Int]
   ): TestFormState = new TestFormState {
     override val dlgType = initDlgType
     override val checkBoxFiled = initCheckBoxFiled
@@ -93,7 +93,7 @@ object TestFormState {
       dateField: String = self.dateField,
       timeField: String = self.timeField,
       referenceField: String = self.referenceField,
-      multiSelectField: String = self.multiSelectField
+      multiSelectField: Seq[Int] = self.multiSelectField
     ): TestFormState = TestFormState(
       dlgType,
       checkBoxFiled,
@@ -124,7 +124,7 @@ object TestFormState {
     override val dateField: String = "123"
     override val timeField: String = "123"
     override val referenceField: String = "2"
-    override val multiSelectField: String = "123"
+    override val multiSelectField: Seq[Int] = Seq(2, 3)
   }
 
 }

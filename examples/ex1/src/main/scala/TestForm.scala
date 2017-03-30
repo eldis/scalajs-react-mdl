@@ -121,7 +121,7 @@ object TestForm {
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Reference")),
-        <.div(^.className := "colRight")(Reference(Reference.Props[RefRow, String](label = "Select value...", ref = ref, value = Some("3"))))
+        <.div(^.className := "colRight")(Reference(Reference.Props[RefRow, String]("Select value...", ref)))
       ),
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("Menu:")),
@@ -135,14 +135,7 @@ object TestForm {
       <.div(^.className := "form-row")(
         <.div(^.className := "col-7-em")(Label("MultiSelectField")),
         <.div(^.className := "colRight")(
-          MultiSelectField(MultiSelectField.Props[RefRowInt, Int](
-            label = "Select values..",
-            ref = refInt,
-            onChange = Some((v) => println(v)),
-            required = Some(true),
-            requiredText = Some("Required field"),
-            value = Some(Seq(1, 3))
-          ))
+          MultiSelectField(MultiSelectField.Props[RefRowInt, Int]("Select values..", refInt, Some(true), Some("Required field")))
         )
       ),
       <.div(^.className := "form-row")(
